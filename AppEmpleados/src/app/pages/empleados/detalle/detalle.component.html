@@ -1,0 +1,120 @@
+<app-loading></app-loading>
+<section class="section" style="margin: 5em;" *ngIf="empleado">
+  <div class="section-body">
+    <div class="row mt-sm-4">
+      <div class="col-12 col-md-12 col-lg-4">
+        <div class="card author-box">
+          <div class="card-body">
+            <div class="author-box-center">
+              <figure class="avatar mr-2 avatar-xl" [attr.data-initial]="getLetrasIniciales(empleado.nombre)"></figure>
+              <div class="clearfix"></div>
+              <div class="author-box-name mt-2">
+                <span>{{empleado.nombre}} {{empleado.apellido}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <h4>Información laboral</h4>
+          </div>
+          <div class="card-body">
+            <div>
+              <p class="clearfix">
+                <span class="float-left">
+                  Cargo
+                </span>
+                <span class="float-right text-muted">
+                  {{empleado.cargo}}
+                </span>
+              </p>
+              <p class="clearfix">
+                <span class="float-left">
+                  Departamento
+                </span>
+                <span class="float-right text-muted">
+                  {{empleado.departamento}}
+                </span>
+              </p>
+              <p class="clearfix">
+                <span class="float-left">
+                  Salario
+                </span>
+                <span class="float-right text-muted">
+                  {{empleado.salario}}
+                </span>
+              </p>
+              <p class="clearfix">
+                <span class="float-left">
+                  Estado
+                </span>
+                <span class="float-right text-muted">
+                  {{getEstadoStringEmpleado(empleado.isActive)}}
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-12 col-lg-8">
+        <div class="card">
+          <div class="padding-20">
+            <ul class="nav nav-tabs" id="myTab2" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" id="home-tab2" data-toggle="tab" href="#about" role="tab" aria-selected="true">Información personal básica</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="profile-tab2" data-toggle="tab" href="#direccion" role="tab" aria-selected="false">Dirección</a>
+              </li>
+            </ul>
+            <div class="tab-content tab-bordered" id="myTab3Content">
+              <div class="tab-pane fade active show" id="about" role="tabpanel" aria-labelledby="home-tab2">
+                <div class="row">
+                  <div class="col-md-3 col-6 b-r">
+                    <strong>Nombre</strong>
+                    <br>
+                    <p class="text-muted">{{empleado.nombre}}</p>
+                  </div>
+                  <div class="col-md-3 col-6 b-r">
+                    <strong>Apellido</strong>
+                    <br>
+                    <p class="text-muted">{{empleado.apellido}}</p>
+                  </div>
+                  <div class="col-md-3 col-6 b-r">
+                    <strong>Fecha de nacimiento</strong>
+                    <br>
+                    <p class="text-muted">{{empleado.fechaNacimiento | date}}</p>
+                  </div>
+                </div>            
+              </div>
+              <div class="tab-pane fade" id="direccion" role="tabpanel" aria-labelledby="profile-tab2">
+                <div class="row">
+                  <div class="col-md-3 col-6 b-r">
+                    <strong>Pais</strong>
+                    <br>
+                    <p class="text-muted">{{empleado.direccion.pais}}</p>
+                  </div>
+                  <div class="col-md-3 col-6 b-r">
+                    <strong>Provincia</strong>
+                    <br>
+                    <p class="text-muted">{{empleado.direccion.provincia}}</p>
+                  </div>
+                  <div class="col-md-3 col-6 b-r">
+                    <strong>Sector</strong>
+                    <br>
+                    <p class="text-muted">{{empleado.direccion.sector}}</p>
+                  </div>
+                  <div class="col-md-3 col-6 b-r">
+                    <strong>Numero casa</strong>
+                    <br>
+                    <p class="text-muted">{{empleado.direccion.numeroCasa}}</p>
+                  </div>
+                </div>  
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

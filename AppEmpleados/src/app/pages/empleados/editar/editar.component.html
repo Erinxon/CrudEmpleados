@@ -1,0 +1,221 @@
+<app-loading></app-loading>
+<div style="margin: 5em;" *ngIf="form">
+    <div class="card">
+        <form [formGroup]="form" (ngSubmit)="submit()">
+          <div class="card-header">
+            <h4>Agregar Empleado</h4>
+          </div>
+          <div class="card-body">
+            <div class="form-row">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Nombre</label>
+                        <input type="text" formControlName="nombre" placeholder="Nombre" class="form-control" 
+                        [ngClass]="{'is-invalid': statusCampos.nombre.invalid && (statusCampos.nombre.dirty || statusCampos.nombre.touched)}">
+                        <ng-container *ngIf="statusCampos.nombre.invalid && (statusCampos.nombre.dirty || statusCampos.nombre.touched)">
+                            <div *ngIf="statusCampos.nombre.errors?.required" class="invalid-feedback">
+                                El nombre es requerido
+                            </div>
+                            <div *ngIf="statusCampos.nombre.errors?.minlength" class="invalid-feedback">
+                                El nombre debe tener al menos 3 caracteres.
+                            </div>
+                            <div *ngIf="statusCampos.nombre.errors?.maxlength" class="invalid-feedback">
+                                El nombre debe tener como máximo 100 caracteres.
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Apellido</label>
+                        <input type="text" formControlName="apellido"  placeholder="Apellido" class="form-control"
+                        [ngClass]="{'is-invalid': statusCampos.apellido.invalid && (statusCampos.apellido.dirty || statusCampos.apellido.touched)}">
+                        <ng-container *ngIf="statusCampos.apellido.invalid && (statusCampos.apellido.dirty || statusCampos.apellido.touched)">
+                            <div *ngIf="statusCampos.apellido.errors?.required" class="invalid-feedback">
+                                El apellido es requerido
+                            </div>
+                            <div *ngIf="statusCampos.apellido.errors?.minlength" class="invalid-feedback">
+                                El apellido debe tener al menos 3 caracteres.
+                            </div>
+                            <div *ngIf="statusCampos.apellido.errors?.maxlength" class="invalid-feedback">
+                                El apellido debe tener como máximo 100 caracteres.
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Fecha de nacimiento</label>
+                        <input type="date"
+                        formControlName="fechaNacimiento" placeholder="Fecha de Nacimiento" class="form-control"
+                        [ngClass]="{'is-invalid': statusCampos.fechaNacimiento.invalid && (statusCampos.fechaNacimiento.dirty || statusCampos.fechaNacimiento.touched)}">
+                        <ng-container *ngIf="statusCampos.fechaNacimiento.invalid && (statusCampos.fechaNacimiento.dirty || statusCampos.fechaNacimiento.touched)">
+                            <div *ngIf="statusCampos.fechaNacimiento.errors?.required" class="invalid-feedback">
+                                La fecha Nacimiento es requerido
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Cargo</label>
+                        <input type="text" formControlName="cargo" placeholder="Cargo" class="form-control"
+                        [ngClass]="{'is-invalid': statusCampos.cargo.invalid && (statusCampos.cargo.dirty || statusCampos.cargo.touched)}">
+                        <ng-container *ngIf="statusCampos.cargo.invalid && (statusCampos.cargo.dirty || statusCampos.cargo.touched)">
+                            <div *ngIf="statusCampos.cargo.errors?.required" class="invalid-feedback">
+                                El cargo es requerido
+                            </div>
+                            <div *ngIf="statusCampos.cargo.errors?.minlength" class="invalid-feedback">
+                                El cargo debe tener al menos 3 caracteres.
+                            </div>
+                            <div *ngIf="statusCampos.cargo.errors?.maxlength" class="invalid-feedback">
+                                El cargo debe tener como máximo 100 caracteres.
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Departamento</label>
+                        <input type="text" formControlName="departamento" placeholder="Departamento" class="form-control"
+                        [ngClass]="{'is-invalid': statusCampos.departamento.invalid && (statusCampos.departamento.dirty || statusCampos.departamento.touched)}">
+                        <ng-container *ngIf="statusCampos.departamento.invalid && (statusCampos.departamento.dirty || statusCampos.departamento.touched)">
+                            <div *ngIf="statusCampos.departamento.errors?.required" class="invalid-feedback">
+                                El departamento es requerido
+                            </div>
+                            <div *ngIf="statusCampos.departamento.errors?.minlength" class="invalid-feedback">
+                                El departamento debe tener al menos 3 caracteres.
+                            </div>
+                            <div *ngIf="statusCampos.departamento.errors?.maxlength" class="invalid-feedback">
+                                El departamento debe tener como máximo 100 caracteres.
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Salario</label>
+                        <input type="number" formControlName="salario" placeholder="Salario" class="form-control"
+                        [ngClass]="{'is-invalid': statusCampos.salario.invalid && (statusCampos.salario.dirty || statusCampos.salario.touched)}">
+                        <ng-container *ngIf="statusCampos.salario.invalid && (statusCampos.salario.dirty || statusCampos.salario.touched)">
+                            <div *ngIf="statusCampos.salario.errors?.required" class="invalid-feedback">
+                                El salario es requerido
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <div class="control-label">Estado</div>
+                        <div class="custom-control custom-checkbox mt-2">
+                            <input type="checkbox" formControlName="isActive"  class="custom-control-input" id="customCheck1">
+                            <label class="custom-control-label" for="customCheck1">Marque esta casilla si desea cambiar el estado</label>
+                          </div>
+                      </div>
+                </div>
+                <div class="col-lg-12" formGroupName="direccion">
+                    <h5>Direccion</h5>
+                    <div class="form-row" >
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Pais</label>
+                                <input type="text" formControlName="pais"  placeholder="Pais" class="form-control"
+                                [ngClass]="{'is-invalid': statusCampos.pais.invalid && (statusCampos.pais.dirty || statusCampos.pais.touched)}">
+                                <ng-container *ngIf="statusCampos.pais.invalid && (statusCampos.pais.dirty || statusCampos.pais.touched)">
+                                    <div *ngIf="statusCampos.pais.errors?.required" class="invalid-feedback">
+                                        El pais es requerido
+                                    </div>
+                                    <div *ngIf="statusCampos.pais.errors?.minlength" class="invalid-feedback">
+                                        El pais debe tener al menos 3 caracteres.
+                                    </div>
+                                    <div *ngIf="statusCampos.pais.errors?.maxlength" class="invalid-feedback">
+                                        El pais debe tener como máximo 100 caracteres.
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Provincia</label>
+                                <input type="text" formControlName="provincia"  placeholder="Provincia" class="form-control"
+                                [ngClass]="{'is-invalid': statusCampos.provincia.invalid && (statusCampos.provincia.dirty || statusCampos.provincia.touched)}">
+                                <ng-container *ngIf="statusCampos.provincia.invalid && (statusCampos.provincia.dirty || statusCampos.provincia.touched)">
+                                    <div *ngIf="statusCampos.provincia.errors?.required" class="invalid-feedback">
+                                        La provincia es requerido
+                                    </div>
+                                    <div *ngIf="statusCampos.provincia.errors?.minlength" class="invalid-feedback">
+                                        La provincia debe tener al menos 3 caracteres.
+                                    </div>
+                                    <div *ngIf="statusCampos.provincia.errors?.maxlength" class="invalid-feedback">
+                                        La provincia debe tener como máximo 100 caracteres.
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label>Sector</label>
+                                <input type="text" formControlName="sector" placeholder="Sector" class="form-control"
+                                [ngClass]="{'is-invalid': statusCampos.sector.invalid && (statusCampos.sector.dirty || statusCampos.sector.touched)}">
+                                <ng-container *ngIf="statusCampos.sector.invalid && (statusCampos.sector.dirty || statusCampos.sector.touched)">
+                                    <div *ngIf="statusCampos.sector.errors?.required" class="invalid-feedback">
+                                        El sector es requerido
+                                    </div>
+                                    <div *ngIf="statusCampos.sector.errors?.minlength" class="invalid-feedback">
+                                        El sector debe tener al menos 3 caracteres.
+                                    </div>
+                                    <div *ngIf="statusCampos.sector.errors?.maxlength" class="invalid-feedback">
+                                        El sector debe tener como máximo 100 caracteres.
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Calle</label>
+                                <input type="text" formControlName="calle"  placeholder="Calle" class="form-control"
+                                [ngClass]="{'is-invalid': statusCampos.calle.invalid && (statusCampos.calle.dirty || statusCampos.calle.touched)}">
+                                <ng-container *ngIf="statusCampos.calle.invalid && (statusCampos.calle.dirty || statusCampos.calle.touched)">
+                                    <div *ngIf="statusCampos.calle.errors?.required" class="invalid-feedback">
+                                        La calle es requerido
+                                    </div>
+                                    <div *ngIf="statusCampos.calle.errors?.minlength" class="invalid-feedback">
+                                        La calle debe tener al menos 3 caracteres.
+                                    </div>
+                                    <div *ngIf="statusCampos.calle.errors?.maxlength" class="invalid-feedback">
+                                        La calle debe tener como máximo 100 caracteres.
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Numero casa</label>
+                                <input type="text"  formControlName="numeroCasa" placeholder="Numero casa" class="form-control"
+                                [ngClass]="{'is-invalid': statusCampos.numeroCasa.invalid && (statusCampos.numeroCasa.dirty || statusCampos.numeroCasa.touched)}">
+                                <ng-container *ngIf="statusCampos.numeroCasa.invalid && (statusCampos.numeroCasa.dirty || statusCampos.numeroCasa.touched)">
+                                    <div *ngIf="statusCampos.numeroCasa.errors?.required" class="invalid-feedback">
+                                        El numeroCasa es requerido
+                                    </div>
+                                    <div *ngIf="statusCampos.numeroCasa.errors?.minlength" class="invalid-feedback">
+                                        El numeroCasa debe tener al menos 3 caracteres.
+                                    </div>
+                                    <div *ngIf="statusCampos.numeroCasa.errors?.maxlength" class="invalid-feedback">
+                                        El numeroCasa debe tener como máximo 100 caracteres.
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+               
+            </div>
+            <div class="card-footer text-right">
+                <button (click)="ToHome()" class="btn btn-danger mr-2">Volver hacia atras</button>
+                <button type="submit" [disabled]="form.invalid" class="btn btn-primary">Editar</button>
+            </div>
+          </div>  
+        </form>
+      </div>
+</div>
