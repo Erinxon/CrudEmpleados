@@ -30,22 +30,23 @@ namespace ApiEmpleado.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<PagedResponse<IEnumerable<EmpleadoDto>>>> GetAll([FromQuery] RequestParameter requestParameter)
+        public async Task<ActionResult<PagedResponse<IEnumerable<EmpleadoDto>>>> GetAll([FromQuery] RequestParameter pagination)
         {
             var response = new PagedResponse<IEnumerable<EmpleadoDto>>();
             try
             {
                 var empleados = await this._unitOfWork.EmpleadoRepository.GetAll();
+                
                 var empleadosDto = empleados.Select(e => new EmpleadoDto
                 {
                     Id = e.Id, Nombre = e.Nombre, Apellido = e.Apellido, FechaNacimiento = e.FechaNacimiento,
                     Cargo = e.Cargo, Departamento = e.Departamento, Salario = e.Salario, IsActive = e.IsActive,
                     Direccion = _mapper.Map<DireccionDto>(_unitOfWork.DireccionRepository.GetById(e.DireccionId).Result)
-                }).Skip(requestParameter.PageNumber).Take(requestParameter.PageSize);
-
+                }).Skip((pagination.PageNumber - 1) * pagination.PageSize).Take(pagination.PageSize);
+                
                 response.TotalRegistros = this._unitOfWork.EmpleadoRepository.GetCount();
-                response.PageNumber = requestParameter.PageNumber;
-                response.PageSize = requestParameter.PageSize;
+                response.PageNumber = pagination.PageNumber;
+                response.PageSize = pagination.PageSize;
                 response.Data = empleadosDto;
             }
             catch (Exception e)

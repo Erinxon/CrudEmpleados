@@ -50,7 +50,7 @@
                         [ngClass]="{'is-invalid': statusCampos.fechaNacimiento.invalid && (statusCampos.fechaNacimiento.dirty || statusCampos.fechaNacimiento.touched)}">
                         <ng-container *ngIf="statusCampos.fechaNacimiento.invalid && (statusCampos.fechaNacimiento.dirty || statusCampos.fechaNacimiento.touched)">
                             <div *ngIf="statusCampos.fechaNacimiento.errors?.required" class="invalid-feedback">
-                                La fecha Nacimiento es requerido
+                                La fecha Nacimiento es requerida
                             </div>
                         </ng-container>
                     </div>
@@ -131,7 +131,7 @@
                                 [ngClass]="{'is-invalid': statusCampos.provincia.invalid && (statusCampos.provincia.dirty || statusCampos.provincia.touched)}">
                                 <ng-container *ngIf="statusCampos.provincia.invalid && (statusCampos.provincia.dirty || statusCampos.provincia.touched)">
                                     <div *ngIf="statusCampos.provincia.errors?.required" class="invalid-feedback">
-                                        La provincia es requerido
+                                        La provincia es requerida
                                     </div>
                                     <div *ngIf="statusCampos.provincia.errors?.minlength" class="invalid-feedback">
                                         La provincia debe tener al menos 3 caracteres.
@@ -167,7 +167,7 @@
                                 [ngClass]="{'is-invalid': statusCampos.calle.invalid && (statusCampos.calle.dirty || statusCampos.calle.touched)}">
                                 <ng-container *ngIf="statusCampos.calle.invalid && (statusCampos.calle.dirty || statusCampos.calle.touched)">
                                     <div *ngIf="statusCampos.calle.errors?.required" class="invalid-feedback">
-                                        La calle es requerido
+                                        La calle es requerida
                                     </div>
                                     <div *ngIf="statusCampos.calle.errors?.minlength" class="invalid-feedback">
                                         La calle debe tener al menos 3 caracteres.
@@ -180,18 +180,18 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label>Numero casa</label>
-                                <input type="text"  formControlName="numeroCasa" placeholder="Numero casa" class="form-control"
+                                <label>Número de la casa</label>
+                                <input type="text"  formControlName="numeroCasa" placeholder="Número de la casa" class="form-control"
                                 [ngClass]="{'is-invalid': statusCampos.numeroCasa.invalid && (statusCampos.numeroCasa.dirty || statusCampos.numeroCasa.touched)}">
                                 <ng-container *ngIf="statusCampos.numeroCasa.invalid && (statusCampos.numeroCasa.dirty || statusCampos.numeroCasa.touched)">
                                     <div *ngIf="statusCampos.numeroCasa.errors?.required" class="invalid-feedback">
-                                        El numeroCasa es requerido
+                                        El número de casa es requerido
                                     </div>
                                     <div *ngIf="statusCampos.numeroCasa.errors?.minlength" class="invalid-feedback">
-                                        El numeroCasa debe tener al menos 3 caracteres.
+                                        El número de casa es requerido debe tener al menos 3 caracteres.
                                     </div>
                                     <div *ngIf="statusCampos.numeroCasa.errors?.maxlength" class="invalid-feedback">
-                                        El numeroCasa debe tener como máximo 100 caracteres.
+                                        El número de casa es requerido debe tener como máximo 100 caracteres.
                                     </div>
                                 </ng-container>
                             </div>
