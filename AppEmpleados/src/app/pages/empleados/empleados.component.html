@@ -1,60 +1,105 @@
 <app-loading></app-loading>
-<div style="margin: 5em;">      
-    <div class="row">
-      <div class="col-12">
-        <div class="card">        
-          <div class="card-header">
-            <button (click)="ToPageAgregar()" class="btn btn-primary"><i class="fa fa-plus mr-1 p-2" aria-hidden="true"> Agregar</i></button>
-            <h4></h4>
-            <div class="card-header-form">
-              <form>
-                <div class="input-group">
-                  <input type="text" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Search">
-                  <div class="input-group-btn">
-                    <button (click)="SearchEmpleado()" class="btn btn-primary"><i class="fas fa-search"></i></button>
+<div style="margin: 5em;">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h4>Empleados</h4>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <div id="table-1_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+              <div class="row">
+                <div class="col-sm-12 col-md-6">
+                  <button (click)="ToPageAgregar()" class="btn btn-primary"><i class="fa fa-plus mr-1"
+                      aria-hidden="true">
+                      Agregar</i></button>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                  <div id="table-1_filter" class="dataTables_filter"><label>Buscar:<input type="search"
+                        [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" (keyup.enter)="SearchEmpleado()"
+                        class="form-control form-control-sm" placeholder="" aria-controls="table-1"></label></div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <table class="table table-striped dataTable no-footer" id="table-1" role="grid"
+                    aria-describedby="table-1_info">
+                    <thead>
+                      <tr role="row">
+                        <th>Nombre</th>
+                        <th>Fecha de Nacimiento</th>
+                        <th>Cargo</th>
+                        <th>Departamento</th>
+                        <th>Salario</th>
+                        <th>Estado</th>
+                        <th>Detalle</th>
+                        <th>Editar</th>
+                        <th>Eliminar</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let empleado of empleados">
+                        <td>{{empleado.nombre}} {{empleado.apellido}}</td>
+                        <td>
+                          {{empleado.fechaNacimiento | date}}
+                        </td>
+                        <td>
+                          {{empleado.cargo}}
+                        </td>
+                        <td> {{empleado.departamento}}</td>
+                        <td> {{empleado.salario}}</td>
+                        <td>
+                          <div class="badge"
+                            [ngClass]="{'badge-success': empleado.isActive, 'badge-danger': !empleado.isActive}">
+                            {{getEstatusString(empleado.isActive)}}
+                          </div>
+                        </td>
+                        <td>
+                          <button (click)="ToPageDetalle(empleado.id)" class="btn btn-success mr-1">Detalle</button>
+
+                        </td>
+                        <td>
+                          <button (click)="ToPageEditar(empleado.id)" class="btn btn-primary mr-1"><i
+                              class="far fa-edit"></i>Editar</button>
+                        </td>
+                        <td>
+                          <button (click)="EliminarEmpleado(empleado.id)" class="btn btn-danger"><i
+                              class="far fa-trash-alt"></i>Eliminar</button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 col-md-5">
+                  <div class="dataTables_length" id="table-1_length"><label>Mostrar
+                      <select name="table-1_length" [(ngModel)]="pageSize" (ngModelChange)="getEmpleados()"
+                        aria-controls="table-1" class="form-control form-control-sm">
+                        <option [value]="pageSize" *ngFor="let pageSize of listaPageSizes">{{pageSize}}</option>
+                      </select> registros</label></div>
+                </div>
+                <div class="col-sm-12 col-md-7">
+                  <div class="dataTables_paginate paging_simple_numbers" id="table-1_paginate">
+                    <ul class="pagination mb-0">
+                      <li class="page-item" [ngClass]="{'disabled': pageNumber ===1}">
+                        <button class="page-link" (click)="getPageAnterior()" tabindex="-1"><i
+                            class="fas fa-chevron-left">
+                            Anterior</i></button>
+                      </li>
+                      <li class="page-item" [ngClass]="{'disabled': totalPaginas === 1 || pageNumber === totalPaginas}">
+                        <button class="page-link" (click)="getPageSiguiente()">Siguiente <i
+                            class="fas fa-chevron-right"></i></button>
+                      </li>
+                    </ul>
                   </div>
                 </div>
-              </form>
-            </div>
-          </div>
-          <div class="card-body p-0">
-            <div class="table-responsive">
-              <table class="table table-striped">
-                <tbody>
-                <tr>
-                  <th>Nombre</th>
-                  <th>Fecha de Nacimiento</th>
-                  <th>Cargo</th>
-                  <th>Departamento</th>
-                  <th>Salario</th>
-                  <th>Estado</th>
-                  <th>Acción</th>
-                </tr>
-                <tr *ngFor="let empleado of empleados">
-                  <td>{{empleado.nombre}} {{empleado.apellido}}</td>
-                  <td>
-                    {{empleado.fechaNacimiento | date}}
-                  </td>
-                  <td>
-                    {{empleado.cargo}}
-                  </td>
-                  <td> {{empleado.departamento}}</td>
-                  <td> {{empleado.salario}}</td>
-                  <td>
-                    <div class="badge" [ngClass]="{'badge-success': empleado.isActive, 'badge-danger': !empleado.isActive}">
-                        {{getEstatusString(empleado.isActive)}}
-                    </div>
-                  </td>
-                  <td>
-                      <button (click)="ToPageDetalle(empleado.id)" class="btn btn-success mr-1">Detalle</button>
-                      <button (click)="ToPageEditar(empleado.id)" class="btn btn-primary mr-1"><i class="far fa-edit"></i>Editar</button>
-                      <button (click)="EliminarEmpleado(empleado.id)" class="btn btn-danger"><i class="far fa-trash-alt"></i>Eliminar</button>
-                  </td>
-                </tr>
-              </tbody></table>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>

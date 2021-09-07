@@ -13,8 +13,8 @@ export class EmpledoService {
 
   constructor(private http: HttpClient) { }
 
-  getEmpleados(): Observable<ApiResponse<Empleado[]>> {
-    return this.http.get<ApiResponse<Empleado[]>>(`/api/Empleados`);
+  getEmpleados(pageNumber: number, pageSize: number): Observable<ApiResponse<Empleado[]>> {
+    return this.http.get<ApiResponse<Empleado[]>>(`/api/Empleados?PageNumber=${pageNumber}&PageSize=${pageSize}`);
   }
 
   getEmpleadoById(id: string): Observable<ApiResponse<Empleado>> {

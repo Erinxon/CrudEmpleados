@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ApiEmpleado.DTOs.DireccionDtos;
 using ApiEmpleado.DTOs.EmpleadoDtos;
 using ApiEmpleado.Entities;
+using ApiEmpleado.Pagination;
 using ApiEmpleado.Repositories;
 using ApiEmpleado.Repository;
 using ApiEmpleado.Response;
@@ -29,9 +30,9 @@ namespace ApiEmpleado.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<ApiResponse<IEnumerable<EmpleadoDto>>>> GetAll()
+        public async Task<ActionResult<PagedResponse<IEnumerable<EmpleadoDto>>>> GetAll([FromQuery] RequestParameter requestParameter)
         {
-            var response = new ApiResponse<IEnumerable<EmpleadoDto>>();
+            var response = new PagedResponse<IEnumerable<EmpleadoDto>>();
             try
             {
                 var empleados = await this._unitOfWork.EmpleadoRepository.GetAll();
@@ -40,7 +41,11 @@ namespace ApiEmpleado.Controllers
                     Id = e.Id, Nombre = e.Nombre, Apellido = e.Apellido, FechaNacimiento = e.FechaNacimiento,
                     Cargo = e.Cargo, Departamento = e.Departamento, Salario = e.Salario, IsActive = e.IsActive,
                     Direccion = _mapper.Map<DireccionDto>(_unitOfWork.DireccionRepository.GetById(e.DireccionId).Result)
-                });
+                }).Skip(requestParameter.PageNumber).Take(requestParameter.PageSize);
+
+                response.TotalRegistros = this._unitOfWork.EmpleadoRepository.GetCount();
+                response.PageNumber = requestParameter.PageNumber;
+                response.PageSize = requestParameter.PageSize;
                 response.Data = empleadosDto;
             }
             catch (Exception e)
@@ -168,13 +173,13 @@ namespace ApiEmpleado.Controllers
         }
         
         [HttpGet("search")]
-        public async Task<ActionResult<ApiResponse<IEnumerable<EmpleadoDto>>>> FilterEmpleado([FromQuery] string search)
+        public async Task<ActionResult<PagedResponse<IEnumerable<EmpleadoDto>>>> FilterEmpleado([FromQuery] string search)
         {
-            var response = new ApiResponse<IEnumerable<EmpleadoDto>>();
+            var response = new PagedResponse<IEnumerable<EmpleadoDto>>();
             try
             {
                 var empleados = await this._unitOfWork.EmpleadoRepository.
-                    Find(e => e.Nombre.Contains(search));
+                    Find(e => e.Nombre.Contains(search) || e.Apellido.Contains(search) );
                 var empleadosDto = empleados.Select(e => new EmpleadoDto
                 {
                     Id = e.Id, Nombre = e.Nombre, Apellido = e.Apellido, FechaNacimiento = e.FechaNacimiento,

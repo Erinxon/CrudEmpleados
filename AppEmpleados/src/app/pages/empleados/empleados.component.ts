@@ -11,6 +11,10 @@ import { EmpledoService } from 'src/app/services/empledo-service.service';
 export class EmpleadosComponent implements OnInit {
   empleados!: Empleado[];
   searchText: string = '';
+  pageNumber: number = 1;
+  pageSize: number = 10;
+  totalPaginas: number =1;
+  listaPageSizes: number[] = [5, 10, 15, 20];
 
   constructor(private empleadoService: EmpledoService, private router: Router) { }
 
@@ -19,7 +23,8 @@ export class EmpleadosComponent implements OnInit {
   }
 
   getEmpleados(): void {
-    this.empleadoService.getEmpleados().subscribe(e => {
+    this.empleadoService.getEmpleados(this.pageNumber, this.pageSize).subscribe(e => {
+      this.totalPaginas = Math.ceil(e.totalRegistros / this.pageSize);
       this.empleados = e.data;
     })
   }
@@ -30,10 +35,8 @@ export class EmpleadosComponent implements OnInit {
 
   EliminarEmpleado(id: string): void {
     this.empleadoService.EliminarEmpleado(id).subscribe(e => {
-      console.log(e);
       this.getEmpleados();
     });
-
   }
 
   ToPageAgregar(): void {
@@ -53,8 +56,19 @@ export class EmpleadosComponent implements OnInit {
       this.empleadoService.SearchEmpleado(this.searchText).subscribe(e => {
         this.empleados = e.data;
       })
-    }   
+    }else{
+      this.getEmpleados();
+    }
   }
   
+  getPageAnterior(): void {
+    this.pageNumber--;
+    this.getEmpleados();
+  }
+
+  getPageSiguiente(): void {
+    this.pageNumber++;
+    this.getEmpleados();
+  }
 
 }

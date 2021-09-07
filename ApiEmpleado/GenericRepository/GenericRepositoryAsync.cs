@@ -60,5 +60,10 @@ namespace ApiEmpleado.Repository
             _context.Entry(entity).State = EntityState.Modified;
         }
 
+        public int GetCount()
+        {
+            return this._dbSet.Count();
+        }
+
     }
 }

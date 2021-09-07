@@ -17,5 +17,6 @@ namespace ApiEmpleado.Repository
         Task Remove(T entity);
         Task RemoveRange(IEnumerable<T> entities);
         Task Update(T entity);
+        int GetCount();
     }
 }
