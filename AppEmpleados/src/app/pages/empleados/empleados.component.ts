@@ -15,6 +15,7 @@ export class EmpleadosComponent implements OnInit {
   pageSize: number = 10;
   totalPaginas: number =1;
   listaPageSizes: number[] = [5, 10, 15, 20];
+  totalRegistros = 0;
 
   constructor(private empleadoService: EmpledoService, private router: Router) { }
 
@@ -25,6 +26,7 @@ export class EmpleadosComponent implements OnInit {
   getEmpleados(): void {
     this.empleadoService.getEmpleados(this.pageNumber, this.pageSize).subscribe(e => {
       this.totalPaginas = Math.ceil(e.totalRegistros / this.pageSize);
+      this.totalRegistros = e.totalRegistros;
       this.empleados = e.data;
     })
   }

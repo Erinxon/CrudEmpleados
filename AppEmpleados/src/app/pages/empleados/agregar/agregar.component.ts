@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { EmpledoService } from 'src/app/services/empledo-service.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-agregar',
@@ -24,7 +25,8 @@ export class AgregarComponent implements OnInit {
     })
   });
 
-  constructor(private formBuilder: FormBuilder, private empleadoService: EmpledoService) { }
+  constructor(private formBuilder: FormBuilder, private empleadoService: EmpledoService,
+    private toastr: ToastrService) { }
 
   ngOnInit(): void {
 
@@ -33,7 +35,10 @@ export class AgregarComponent implements OnInit {
   submit() {
     this.empleadoService.CrearEmpleado(this.form.value).subscribe(e => {
       if(e.succeeded) {
+        this.toastr.success('Empleado agregado correctamente', 'Exito');
         this.reset();
+      }else{
+        this.toastr.error('Error al agregar el empleado', 'Error');
       }
     });
   }

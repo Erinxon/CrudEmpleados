@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router';
 import { Empleado } from 'src/app/models/Empleado';
 import { EmpledoService } from 'src/app/services/empledo-service.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-editar',
@@ -15,7 +16,8 @@ export class EditarComponent implements OnInit {
   form!: FormGroup;
   
   constructor(private activatedRoute: ActivatedRoute, private formBuilder: FormBuilder,
-    private router: Router, private empleadoService: EmpledoService) { 
+    private router: Router, private empleadoService: EmpledoService,
+    private toastr: ToastrService) { 
       
     }
 
@@ -75,7 +77,10 @@ export class EditarComponent implements OnInit {
   submit(): void {
     this.empleadoService.ActualizarEmpleado(this.empleado.id, this.form.value).subscribe(e => {
       if(e.succeeded){
+        this.toastr.success('Empleado actualizado correctamente', 'Actualizado');
         this.ToHome();
+      }else{
+        this.toastr.error('Error al actualizar empleado', 'Error');
       }
     })
   }

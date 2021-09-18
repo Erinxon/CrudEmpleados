@@ -29,8 +29,10 @@ export class DetalleComponent implements OnInit {
     return this.activatedRoute.snapshot.paramMap.get('id')!;
   }
 
-  getLetrasIniciales(nombre: string): string {
-    return nombre.substr(-nombre.length,1);
+  getLetrasIniciales(nombre: string, apellido: string): string {
+    const iniciales = nombre.charAt(0) + apellido.charAt(0);
+    //return nombre.substr(-nombre.length,1);
+    return iniciales;
   }
 
   getEstadoStringEmpleado(estado: boolean): string {

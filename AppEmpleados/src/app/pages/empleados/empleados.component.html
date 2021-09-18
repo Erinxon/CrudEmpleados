@@ -32,6 +32,7 @@
                         <th>Cargo</th>
                         <th>Departamento</th>
                         <th>Salario</th>
+                        <th>Creado</th>
                         <th>Estado</th>
                         <th>Detalle</th>
                         <th>Editar</th>
@@ -39,6 +40,9 @@
                       </tr>
                     </thead>
                     <tbody>
+                      <tr *ngIf="totalRegistros === 0">
+                        <td colspan="10" class="text-center">No hay registros</td>
+                      </tr>
                       <tr *ngFor="let empleado of empleados">
                         <td>{{empleado.nombre}} {{empleado.apellido}}</td>
                         <td>
@@ -49,6 +53,9 @@
                         </td>
                         <td> {{empleado.departamento}}</td>
                         <td> {{empleado.salario}}</td>
+                        <td> 
+                          {{empleado.fechaCreacion | date}}
+                        </td>
                         <td>
                           <div class="badge"
                             [ngClass]="{'badge-success': empleado.isActive, 'badge-danger': !empleado.isActive}">
@@ -75,7 +82,7 @@
               <div class="row">
                 <div class="col-sm-12 col-md-5">
                   <div class="dataTables_length" id="table-1_length"><label>Mostrar
-                      <select name="table-1_length" [(ngModel)]="pageSize" (ngModelChange)="getEmpleados()"
+                      <select [disabled]="totalRegistros === 0" name="table-1_length" [(ngModel)]="pageSize" (ngModelChange)="getEmpleados()"
                         aria-controls="table-1" class="form-control form-control-sm">
                         <option [value]="pageSize" *ngFor="let pageSize of listaPageSizes">{{pageSize}}</option>
                       </select> registros</label></div>
@@ -83,12 +90,12 @@
                 <div class="col-sm-12 col-md-7">
                   <div class="dataTables_paginate paging_simple_numbers" id="table-1_paginate">
                     <ul class="pagination mb-0">
-                      <li class="page-item" [ngClass]="{'disabled': pageNumber ===1}">
+                      <li class="page-item" [ngClass]="{'disabled': pageNumber === 1 || totalRegistros === 0}">
                         <button class="page-link" (click)="getPageAnterior()" tabindex="-1"><i
                             class="fas fa-chevron-left">
                             Anterior</i></button>
                       </li>
-                      <li class="page-item" [ngClass]="{'disabled': totalPaginas === 1 || pageNumber === totalPaginas}">
+                      <li class="page-item" [ngClass]="{'disabled': totalPaginas === 1 || pageNumber === totalPaginas || totalRegistros === 0}">
                         <button class="page-link" (click)="getPageSiguiente()">Siguiente <i
                             class="fas fa-chevron-right"></i></button>
                       </li>
