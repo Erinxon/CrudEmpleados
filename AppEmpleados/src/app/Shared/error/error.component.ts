@@ -26,10 +26,10 @@ export class ErrorComponent implements OnInit, OnDestroy {
 
 
   getError(): void {
-    this.susbcription.add(
-    this.errorService.getError().subscribe(e => {
+    this.susbcription = this.errorService.getError().subscribe(e => {
       this.error = e;
-    }));
+    });
+    
   }
 
   setError(){

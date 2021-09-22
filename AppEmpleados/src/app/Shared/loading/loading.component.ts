@@ -15,11 +15,9 @@ export class LoadingComponent implements OnInit, OnDestroy {
   constructor(private loandingService: LoadingService) { }
 
   ngOnInit(): void {
-    this.susbcription.add(
-      this.loandingService.getLoanding().subscribe((loanding) => {
-        this.isLoanding = loanding;
-      })
-    );
+    this.susbcription = this.loandingService.getLoanding().subscribe((loanding) => {
+      this.isLoanding = loanding;
+    });
   }
 
   ngOnDestroy(): void {
