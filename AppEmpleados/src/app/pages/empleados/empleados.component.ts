@@ -40,6 +40,7 @@ export class EmpleadosComponent implements OnInit {
     this.empleadoService.EliminarEmpleado(id).subscribe(e => {
       this.getEmpleados();
     });
+    this.showOrHideDialog();
   }
 
   ToPageAgregar(): void {
