@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Empleado } from 'src/app/models/Empleado';
 import { EmpledoService } from 'src/app/services/empledo-service.service';
 import { ToastrService } from 'ngx-toastr';
+import { MyValidations } from 'src/app/utils/my-validations';
 
 @Component({
   selector: 'app-editar',
@@ -45,6 +46,7 @@ export class EditarComponent implements OnInit {
       cargo: [this.empleado.cargo,  [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       departamento: [this.empleado.departamento, [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       salario: [this.empleado.salario, Validators.required],
+      cedula: [this.empleado.cedula, [Validators.required, MyValidations.isCedulaInvalid]],
       isActive: [this.empleado.isActive, Validators.required],
       direccion: this.formBuilder.group({
         id: [this.empleado.direccion.id, Validators.required],
@@ -65,6 +67,7 @@ export class EditarComponent implements OnInit {
       cargo: this.form.get('cargo')!,
       departamento: this.form.get('departamento')!,
       salario: this.form.get('salario')!,
+      cedula: this.form.get('cedula')!,
       isActive: this.form.get('isActive')!,
       pais: this.form.get('direccion.pais')!,
       provincia: this.form.get('direccion.provincia')!,

@@ -43,6 +43,22 @@
                         </ng-container>
                     </div>
                 </div>
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label>Cedula</label>
+                        <input type="text" formControlName="cedula" placeholder="Cedula" class="form-control"
+                            [ngClass]="{'is-invalid': statusCampos.cedula.invalid && (statusCampos.cedula.dirty || statusCampos.cedula.touched)}">
+                        <ng-container
+                            *ngIf="statusCampos.cedula.invalid && (statusCampos.cedula.dirty || statusCampos.cedula.touched)">
+                            <div *ngIf="statusCampos.cedula.errors?.required" class="invalid-feedback">
+                                La cedula es requerida
+                            </div>
+                            <div *ngIf="!statusCampos.cedula.errors?.required && statusCampos.cedula.errors?.isCedulaInvalid" class="invalid-feedback">
+                                La cedula es no es valida
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label>Fecha de nacimiento</label>

@@ -14,8 +14,10 @@ namespace ApiEmpleado.DTOs.EmpleadoDtos
         public string Cargo { get; set; }
         public string Departamento { get; set; }
         public decimal Salario { get; set; }
+        public  string Cedula { get; set; }
         [JsonIgnore]
         public Guid DireccionId { get; set; }
+        public DateTime FechaCreacion { get; set; }
         public bool IsActive { get; set; }
         public DireccionDto Direccion { get; set; }
     }

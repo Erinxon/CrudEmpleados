@@ -26,7 +26,13 @@ namespace ApiEmpleado.Entities.EntityConfig
             builder.Property(p => p.Salario)
                 .HasColumnType("decimal(15,2)")
                 .IsRequired();
+            builder.Property(p => p.Cedula)
+                .HasColumnType("varchar(11)")
+                .IsRequired();
             builder.Property(p => p.DireccionId)
+                .IsRequired();
+            builder.Property(p => p.FechaCreacion)
+                .HasColumnType("datetime")
                 .IsRequired();
             builder.Property(p => p.IsActive)
                 .HasColumnType("bit");

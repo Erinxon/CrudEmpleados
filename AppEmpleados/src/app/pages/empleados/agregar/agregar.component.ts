@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { EmpledoService } from 'src/app/services/empledo-service.service';
 import { ToastrService } from 'ngx-toastr';
+import { MyValidations } from 'src/app/utils/my-validations';
 
 @Component({
   selector: 'app-agregar',
@@ -16,6 +17,7 @@ export class AgregarComponent implements OnInit {
     cargo: ['',  [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
     departamento: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
     salario: [null, Validators.required],
+    cedula: [null, [Validators.required, MyValidations.isCedulaInvalid]],
     direccion: this.formBuilder.group({
       pais: ['',  [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       provincia: ['',  [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
@@ -52,6 +54,7 @@ export class AgregarComponent implements OnInit {
       cargo: this.form.get('cargo')!,
       departamento: this.form.get('departamento')!,
       salario: this.form.get('salario')!,
+      cedula: this.form.get('cedula')!,
       pais: this.form.get('direccion.pais')!,
       provincia: this.form.get('direccion.provincia')!,
       sector: this.form.get('direccion.sector')!,

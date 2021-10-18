@@ -11,6 +11,7 @@ namespace ApiEmpleado.DTOs.EmpleadoDtos
         public string Cargo { get; set; }
         public string Departamento { get; set; }
         public decimal Salario { get; set; }
+        public  string Cedula { get; set; }
         public bool IsActive { get; set; }
         public UpdateDireccionDto Direccion { get; set; }
     }

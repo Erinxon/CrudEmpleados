@@ -17,6 +17,7 @@ export class EmpleadosComponent implements OnInit {
   listaPageSizes: number[] = [5, 10, 15, 20];
   totalRegistros = 0;
 
+  showDialogEliminar: boolean = false;
   constructor(private empleadoService: EmpledoService, private router: Router) { }
 
   ngOnInit(): void {
@@ -71,6 +72,10 @@ export class EmpleadosComponent implements OnInit {
   getPageSiguiente(): void {
     this.pageNumber++;
     this.getEmpleados();
+  }
+
+  showOrHideDialog(){
+    this.showDialogEliminar = !this.showDialogEliminar;
   }
 
 }

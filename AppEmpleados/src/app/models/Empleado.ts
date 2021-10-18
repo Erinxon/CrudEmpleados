@@ -8,6 +8,7 @@ export interface Empleado {
     cargo: string;
     departamento: string;
     salario: number;
+    cedula: string;
     fechaCreacion: Date;
     isActive: boolean;
     direccion: Direccion;

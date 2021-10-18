@@ -7,6 +7,7 @@ export interface UpdateEmpleadoModel {
     cargo: string;
     departamento: string;
     salario: number;
+    cedula: string;
     isActive: boolean;
     direccion: Direccion;
 }

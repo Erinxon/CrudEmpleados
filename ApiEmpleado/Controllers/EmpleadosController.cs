@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.SymbolStore;
 using System.Linq;
 using System.Threading.Tasks;
 using ApiEmpleado.DTOs.DireccionDtos;
@@ -40,16 +41,20 @@ namespace ApiEmpleado.Controllers
                 var empleadosDto = empleados.Select(e => new EmpleadoDto
                 {
                     Id = e.Id, Nombre = e.Nombre, Apellido = e.Apellido, FechaNacimiento = e.FechaNacimiento,
-                    Cargo = e.Cargo, Departamento = e.Departamento, Salario = e.Salario, IsActive = e.IsActive,
-                    Direccion = _mapper.Map<DireccionDto>(_unitOfWork.DireccionRepository.GetById(e.DireccionId).Result)
-                }).Skip((pagination.PageNumber - 1) * pagination.PageSize).Take(pagination.PageSize);
+                    Cargo = e.Cargo, Departamento = e.Departamento, Salario = e.Salario, FechaCreacion = e.FechaCreacion,
+                    IsActive = e.IsActive, Direccion = _mapper.
+                        Map<DireccionDto>(_unitOfWork.DireccionRepository.
+                            GetById(e.DireccionId).Result)
+                }).OrderByDescending(e => e.FechaCreacion).
+                    Skip((pagination.PageNumber - 1) * pagination.PageSize).
+                    Take(pagination.PageSize);
                 
                 response.TotalRegistros = this._unitOfWork.EmpleadoRepository.GetCount();
                 response.PageNumber = pagination.PageNumber;
                 response.PageSize = pagination.PageSize;
                 response.Data = empleadosDto;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 response.Succeeded = false;
                 response.Message = $"Ha ocurrido un error Inesperado";
@@ -70,7 +75,7 @@ namespace ApiEmpleado.Controllers
                 {
                     response.Succeeded = false;
                     response.Message = "Empleado no encontrado!";
-                    return BadRequest(response);
+                    return NotFound(response);
                 }
                 var empleadoDto = _mapper.Map<EmpleadoDto>(empleado);
                 empleadoDto.Direccion = _mapper.
@@ -78,7 +83,7 @@ namespace ApiEmpleado.Controllers
                         GetById(empleado.DireccionId).Result);
                 response.Data = empleadoDto;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 response.Succeeded = false;
                 response.Message = $"Ha ocurrido un error Inesperado";
@@ -99,7 +104,7 @@ namespace ApiEmpleado.Controllers
                 await _unitOfWork.SavechangesAsync();
                 response.Data = _mapper.Map<EmpleadoDto>(empleado);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 response.Succeeded = false;
                 response.Message = $"Ha ocurrido un error Inesperado";
@@ -119,10 +124,11 @@ namespace ApiEmpleado.Controllers
                 {
                     response.Succeeded = false;
                     response.Message = "Empleado no encontrado!";
-                    return BadRequest(response);
+                    return NotFound(response);
                 }
 
                 var empleado = _mapper.Map<Empleado>(empleadoDto);
+                empleado.FechaCreacion = empleatoToUpdate.FechaCreacion;
                 empleado.Id = id;
                 empleado.DireccionId = empleatoToUpdate.DireccionId;
                 await this._unitOfWork.EmpleadoRepository.Update(empleado);
@@ -133,7 +139,7 @@ namespace ApiEmpleado.Controllers
                 var resultUpdate = await _unitOfWork.SavechangesAsync();
                 response.Data = resultUpdate > 0 ? 1 : 0;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 response.Succeeded = false;
                 response.Message = $"Ha ocurrido un error Inesperado";
@@ -154,7 +160,7 @@ namespace ApiEmpleado.Controllers
                 {
                     response.Succeeded = false;
                     response.Message = "Empleado no encontrado!";
-                    return BadRequest(response);
+                    return NotFound(response);
                 }
                 
                 var direccionEmpleado = await this._unitOfWork.DireccionRepository.
@@ -163,7 +169,7 @@ namespace ApiEmpleado.Controllers
                 await this._unitOfWork.DireccionRepository.Remove(direccionEmpleado);
                 response.Data = await _unitOfWork.SavechangesAsync();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 response.Succeeded = false;
                 response.Message = $"Ha ocurrido un error Inesperado";
@@ -184,13 +190,13 @@ namespace ApiEmpleado.Controllers
                 var empleadosDto = empleados.Select(e => new EmpleadoDto
                 {
                     Id = e.Id, Nombre = e.Nombre, Apellido = e.Apellido, FechaNacimiento = e.FechaNacimiento,
-                    Cargo = e.Cargo, Departamento = e.Departamento, Salario = e.Salario, IsActive = e.IsActive,
+                    Cargo = e.Cargo, Departamento = e.Departamento, Salario = e.Salario, Cedula = e.Cedula, IsActive = e.IsActive,
                     Direccion = _mapper.Map<DireccionDto>(_unitOfWork.DireccionRepository.GetById(e.DireccionId).Result)
                 });
                 response.Data = empleadosDto;
                
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 response.Succeeded = false;
                 response.Message = $"Ha ocurrido un error Inesperado";
@@ -198,7 +204,7 @@ namespace ApiEmpleado.Controllers
             }
             return Ok(response);
         }
-
+       
 
     }
 }
